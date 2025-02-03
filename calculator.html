@@ -7,56 +7,80 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
         
-        /* Floating Calculator Container */
-        #calculator-container {
-            position: fixed; bottom: 10px; right: 10px;
-            width: 320px; background: white; padding: 10px;
-            border: 1px solid #ccc; border-radius: 5px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-            display: none; /* Start Hidden */
-        }
-
-        /* Header with Minimize Button */
-        #calculator-header {
-            background-color: #007bff; color: white;
-            padding: 5px; text-align: right; cursor: pointer;
-            font-size: 16px; border-top-left-radius: 5px; border-top-right-radius: 5px;
-        }
-
-        /* Calculator Buttons and Display */
-        #calculator {
+        /* Hidden Calculator Pop-up */
+        #calculator-modal {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 320px;
+            background: white;
             padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 99999;
         }
+
+        /* Header for Minimize Button */
+        #calculator-header {
+            background-color: #007bff;
+            color: white;
+            padding: 5px;
+            text-align: right;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Calculator Buttons */
         input {
-            width: 90%; padding: 10px; margin: 5px 0;
-            font-size: 18px; text-align: right;
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 18px;
+            text-align: right;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
         button {
-            width: 22%; padding: 10px; font-size: 18px;
-            margin: 3px; border: none; cursor: pointer;
-            background: #007bff; color: white; border-radius: 3px;
+            width: 22%;
+            padding: 10px;
+            font-size: 18px;
+            margin: 3px;
+            border: none;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            border-radius: 3px;
         }
         button:hover {
             background: #0056b3;
         }
 
-        /* Floating "Open Calculator" Button */
+        /* Floating Open Calculator Button */
         #toggle-btn {
-            position: fixed; bottom: 10px; right: 10px;
-            background-color: #007bff; color: white;
-            padding: 10px 15px; border: none; border-radius: 5px;
-            cursor: pointer; font-size: 16px;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 99999;
         }
     </style>
 </head>
 <body>
 
     <!-- Open Calculator Button -->
-    <button id="toggle-btn" onclick="toggleCalculator()">🖩 Open Calculator</button>
+    <button id="toggle-btn" onclick="openCalculator()">🖩 Open Calculator</button>
 
-    <!-- Calculator Container -->
-    <div id="calculator-container">
-        <div id="calculator-header" onclick="toggleCalculator()">✖ Minimize</div>
+    <!-- Calculator Modal -->
+    <div id="calculator-modal">
+        <div id="calculator-header" onclick="closeCalculator()">✖ Minimize</div>
         <div id="calculator">
             <input type="text" id="display" readonly><br>
             <button onclick="clearDisplay()">C</button>
@@ -75,7 +99,7 @@
             <button onclick="appendToDisplay('.')">.</button>
             <button onclick="calculate()">=</button>
             <button onclick="appendToDisplay('*')">*</button><br>
-            <button onclick="appendToDisplay('/')">/</button> <!-- Division button added -->
+            <button onclick="appendToDisplay('/')">/</button>
         </div>
     </div>
 
@@ -93,17 +117,11 @@
                 document.getElementById("display").value = "Error";
             }
         }
-
-        function toggleCalculator() {
-            var calc = document.getElementById("calculator-container");
-            var btn = document.getElementById("toggle-btn");
-            if (calc.style.display === "none") {
-                calc.style.display = "block"; // Show Calculator
-                btn.style.display = "none"; // Hide Button
-            } else {
-                calc.style.display = "none"; // Hide Calculator
-                btn.style.display = "block"; // Show Button
-            }
+        function openCalculator() {
+            document.getElementById("calculator-modal").style.display = "block";
+        }
+        function closeCalculator() {
+            document.getElementById("calculator-modal").style.display = "none";
         }
     </script>
 
